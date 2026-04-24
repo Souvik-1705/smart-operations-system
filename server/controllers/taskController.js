@@ -1,4 +1,5 @@
 import Task from "../models/Task.js";
+import ActivityLog from "../models/ActivityLog.js";
 
 //CREATE TASK
 export const createTask = async (req, res) => {
@@ -12,7 +13,11 @@ export const createTask = async (req, res) => {
             createdBy: req.user._id,
         });
         //Log Activity
-        await logActivity("Task Created", req.user._id, task._id);
+        await ActivityLog.create({
+            action: "Task Created",
+            user: req.user._id,
+            task: task._id
+        });
 
         res.status(201).json({ message: "Task created", task });
     } catch (error) {
@@ -44,7 +49,7 @@ export const updateTask = async (req, res) => {
         const task = await Task.findById(req.params.id);
 
         if (!task) {
-            return res.status(404).json({ message: "Tssk not found" })
+            return res.status(404).json({ message: "Task not found" })
         }
 
         //PERMISSION CHECK
@@ -58,9 +63,12 @@ export const updateTask = async (req, res) => {
             { new: true }
         );
         //Log Activity
-        await logActivity("Task Updated", req.user._id, task._id);
-
-        res.json({ message: "Task Updated", updateTask });
+        await ActivityLog.create({
+            action: "Task Updated",
+            user: req.user._id,
+            task: task._id,
+        });
+        res.json({ message: "Task Updated", updatedTask });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
