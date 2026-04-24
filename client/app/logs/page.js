@@ -7,7 +7,7 @@ export default function Logs() {
   const fetchLogs = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/activity/logs", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/activity/logs`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

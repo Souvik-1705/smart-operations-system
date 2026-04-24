@@ -9,7 +9,7 @@ export default function Dashboard() {
   const fetchTasks = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/tasks", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -28,7 +28,7 @@ export default function Dashboard() {
   const updateTask = async (id) => {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:5000/api/tasks/${id}`, {
+    await fetch(`${NEXT_PUBLIC_BASE_URL}/api/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
