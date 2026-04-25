@@ -17,6 +17,7 @@ export default function Dashboard() {
 
     const data = await res.json();
     setTasks(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Dashboard() {
   const updateTask = async (id) => {
     const token = localStorage.getItem("token");
 
-    await fetch(`${NEXT_PUBLIC_BASE_URL}/api/tasks/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -101,14 +102,14 @@ export default function Dashboard() {
               <p className="text-sm text-gray-600">
                 Status: {task.status}
               </p>
-              {role==="user" &&
-              <button
-                onClick={() => updateTask(task._id)}
-                className="bg-green-500 text-white px-2 py-1 mt-2 rounded"
-              >
-                Mark Completed
-              </button>
-              }
+              {role === "user" && task.status !== "completed" && (
+                <button
+                  onClick={() => updateTask(task._id)}
+                  className="bg-green-500 text-white px-2 py-1 mt-2 rounded"
+                >
+                  Mark Completed
+                </button>
+              )}
             </div>
           ))
         )}

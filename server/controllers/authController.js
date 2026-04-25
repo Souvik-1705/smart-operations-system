@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 //SIGNUP
 export const signup=async(req,res)=>{
     try {
-        const{name,email,password,role}=req.body;
+        const{name,email,password}=req.body;
 
         //1.Validation
         if(!name || !email || !password ){
@@ -26,7 +26,7 @@ export const signup=async(req,res)=>{
             name,
             email,
             password:hashedPassword,
-            role,
+            role:"user",
         })
         await user.save();
 

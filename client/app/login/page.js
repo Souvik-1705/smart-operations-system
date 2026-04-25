@@ -51,6 +51,16 @@ export default function LoginPage() {
         >
           Login
         </button>
+
+        <p className="mt-3 text-sm">
+          Don't have an account?{" "}
+          <span
+            className="text-blue-500 cursor-pointer"
+            onClick={() => router.push("/signup")}
+          >
+            Signup
+          </span>
+        </p>
       </div>
     </div>
   );
